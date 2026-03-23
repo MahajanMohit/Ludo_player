@@ -36,7 +36,7 @@ class SignalingClient @Inject constructor() {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private var connectJob: Job? = null
-    private var wsSession: io.ktor.websocket.DefaultClientWebSocketSession? = null
+    private var wsSession: io.ktor.client.plugins.websocket.DefaultClientWebSocketSession? = null
 
     private val client = HttpClient(CIO) {
         install(WebSockets)
