@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Screen / monitor shape -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M27,34 Q27,28 33,28 L75,28 Q81,28 81,34 L81,66 Q81,72 75,72 L60,72 L60,78 L48,78 L48,72 L33,72 Q27,72 27,66 Z" />
+    <!-- Screen inner (blue cutout) -->
+    <path
+        android:fillColor="#1565C0"
+        android:pathData="M32,36 L76,36 L76,68 L32,68 Z" />
+    <!-- WiFi-style signal arcs representing wireless connection -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:pathData="M42,56 A12,12 0 0,1 66,56"
+        android:fillAlpha="0" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:pathData="M46,61 A6,6 0 0,1 62,61"
+        android:fillAlpha="0" />
+    <circle
+        android:fillColor="#FFFFFF"
+        android:cx="54"
+        android:cy="65"
+        android:r="2.5" />
+</vector>
