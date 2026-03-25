@@ -6,7 +6,7 @@ import android.hardware.display.DisplayManager
 import android.media.projection.MediaProjection
 import android.util.DisplayMetrics
 import android.view.WindowManager
-import org.webrtc.CapturerObserver
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.webrtc.EglBase
 import org.webrtc.ScreenCapturerAndroid
 import org.webrtc.SurfaceTextureHelper
@@ -22,7 +22,7 @@ import javax.inject.Inject
  * output resolution accordingly — otherwise the stream remains letterboxed.
  */
 class ScreenCaptureVideoSource @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val eglBase: EglBase
 ) {
 
