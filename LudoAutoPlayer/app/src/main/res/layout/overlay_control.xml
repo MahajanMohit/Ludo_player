@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/overlay_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#CC1C1B1F"
+    android:padding="8dp"
+    android:minWidth="140dp">
+
+    <!-- Drag handle / title bar -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ludo Bot"
+        android:textColor="#FFFFFFFF"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:paddingBottom="4dp"
+        android:gravity="center" />
+
+    <!-- Status text -->
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Idle"
+        android:textColor="#FFD0BCFF"
+        android:textSize="11sp"
+        android:paddingBottom="4dp"
+        android:gravity="center" />
+
+    <!-- Move counter -->
+    <TextView
+        android:id="@+id/tv_move_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Moves: 0"
+        android:textColor="#FFCAC4D0"
+        android:textSize="10sp"
+        android:paddingBottom="6dp"
+        android:gravity="center" />
+
+    <!-- Stop button -->
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:text="Stop"
+        android:textSize="11sp"
+        android:backgroundTint="#FFB3261E"
+        android:textColor="#FFFFFFFF" />
+
+</LinearLayout>

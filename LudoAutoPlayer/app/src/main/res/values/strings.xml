@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ludo Auto Player</string>
+    <string name="app_description">An intelligent auto-player for Ludo King that plays on your behalf using screen analysis and strategic decision making.</string>
+
+    <!-- Accessibility Service -->
+    <string name="accessibility_service_label">Ludo Auto Player Service</string>
+    <string name="accessibility_service_description">This service allows Ludo Auto Player to interact with Ludo King by performing taps and reading screen content automatically.</string>
+
+    <!-- Permissions -->
+    <string name="permission_notifications_title">Notification Permission</string>
+    <string name="permission_notifications_desc">Required to show status notifications when the auto-player is running in the background.</string>
+
+    <string name="permission_overlay_title">Display Over Other Apps</string>
+    <string name="permission_overlay_desc">Required to display the control overlay panel on top of Ludo King while the auto-player is active.</string>
+
+    <string name="permission_media_projection_title">Screen Capture</string>
+    <string name="permission_media_projection_desc">Required to read the Ludo King game screen and detect dice values, piece positions, and turn status.</string>
+
+    <string name="permission_accessibility_title">Accessibility Service</string>
+    <string name="permission_accessibility_desc">Required to perform taps on the Ludo King screen to roll the dice and move pieces automatically.</string>
+
+    <!-- Buttons -->
+    <string name="btn_get_started">Get Started</string>
+    <string name="btn_grant_permission">Grant Permission</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_start_auto_player">Start Auto Player</string>
+    <string name="btn_stop_auto_player">Stop Auto Player</string>
+    <string name="btn_launch_ludo_king">Launch Ludo King</string>
+    <string name="btn_settings">Settings</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">Dashboard</string>
+    <string name="all_permissions_granted">All permissions granted</string>
+    <string name="permissions_incomplete">Some permissions are missing</string>
+    <string name="status_idle">Status: Idle</string>
+    <string name="status_running">Status: Running</string>
+    <string name="status_analysing">Status: Analysing board…</string>
+    <string name="status_moving">Status: Moving piece…</string>
+    <string name="status_waiting">Status: Waiting for turn…</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_player_color">Bot Player Color</string>
+    <string name="settings_speed">Play Speed</string>
+    <string name="settings_strategy">Strategy</string>
+    <string name="settings_strategy_aggressive">Aggressive</string>
+    <string name="settings_strategy_defensive">Defensive</string>
+
+    <!-- Colors -->
+    <string name="color_red">Red</string>
+    <string name="color_green">Green</string>
+    <string name="color_yellow">Yellow</string>
+    <string name="color_blue">Blue</string>
+
+    <!-- Overlay -->
+    <string name="overlay_channel_id">ludo_auto_player_overlay</string>
+    <string name="overlay_channel_name">Ludo Auto Player</string>
+    <string name="overlay_notification_title">Ludo Auto Player Active</string>
+    <string name="overlay_notification_text">Auto-playing Ludo King…</string>
+
+    <!-- Errors / Misc -->
+    <string name="error_service_not_connected">Accessibility service is not connected.</string>
+    <string name="error_capture_failed">Screen capture failed. Please restart the service.</string>
+    <string name="move_count_label">Moves made: %1$d</string>
+    <string name="last_action_label">Last action: %1$s</string>
+</resources>
