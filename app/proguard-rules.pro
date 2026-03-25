@@ -26,5 +26,10 @@
 -keep @dagger.hilt.android.AndroidEntryPoint class * { *; }
 -keep @dagger.hilt.InstallIn class * { *; }
 
+# SLF4J — Ktor's server engine pulls in SLF4J; the StaticLoggerBinder is a
+# compile-time artifact not present on Android. Suppress the R8 warning.
+-dontwarn org.slf4j.**
+-dontwarn org.slf4j.impl.StaticLoggerBinder
+
 # Timber
 -dontwarn org.jetbrains.annotations.**
