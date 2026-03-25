@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import timber.log.Timber
-import kotlin.time.Duration.Companion.seconds
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -43,8 +42,8 @@ class SignalingServer @Inject constructor() {
 
     private val server = embeddedServer(Netty, port = DEFAULT_PORT) {
         install(WebSockets) {
-            pingPeriod = 15.seconds
-            timeout = 30.seconds
+            pingPeriodMillis = 15_000
+            timeoutMillis = 30_000
             maxFrameSize = Long.MAX_VALUE
         }
         routing {
