@@ -6,17 +6,20 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     name: Build & Sign Release APK
     runs-on: ubuntu-latest
 
     steps:
-      # ── 1. Checkout ────────────────────────────────────────────────────────
+      # ── 1. Checkout ───────────────────────────────────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ── 2. JDK 17 ─────────────────────────────────────────────────────────
+      # ── 2. JDK 17 ───────────────────────────────────────────────────────────────────
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -24,7 +27,7 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      # ── 3. Gradle cache ───────────────────────────────────────────────────
+      # ── 3. Gradle cache ──────────────────────────────────────────────────────────────────
       - name: Cache Gradle packages
         uses: actions/cache@v4
         with:
@@ -35,35 +38,28 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # ── 4. Grant execute permission ───────────────────────────────────────
+      # ── 4. Grant execute permission ──────────────────────────────────────────────────────────────
       - name: Make gradlew executable
         run: chmod +x gradlew
 
-      # ── 5. Build release APK ──────────────────────────────────────────────
+      # ── 5. Build release APK ──────────────────────────────────────────────────────────────
       - name: Build Release APK
         run: ./gradlew assembleRelease --stacktrace
         env:
-          # No signing config in this step; we sign below with apksigner
           GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
-      # ── 6. Decode keystore from GitHub Secret ────────────────────────────
-      #   Secret setup instructions:
-      #   1. base64 -i your_keystore.jks | pbcopy   (macOS) or
-      #      base64 your_keystore.jks                (Linux)
-      #   2. Add the output as GitHub Secret KEYSTORE_BASE64
-      #   3. Add KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD as secrets
+      # ── 6. Decode keystore from GitHub Secret ───────────────────────────────────────────
       - name: Decode keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > $RUNNER_TEMP/keystore.jks
 
-      # ── 7. Sign APK with apksigner ────────────────────────────────────────
+      # ── 7. Sign APK with apksigner ─────────────────────────────────────────────────────────────
       - name: Sign APK
         run: |
           UNSIGNED_APK=$(find app/build/outputs/apk/release -name "*.apk" | head -1)
           SIGNED_APK="${UNSIGNED_APK/unsigned/signed}"
           SIGNED_APK="${SIGNED_APK/-unsigned/}"
 
-          # Use apksigner from Android build-tools (pre-installed on ubuntu-latest)
           $ANDROID_HOME/build-tools/$(ls $ANDROID_HOME/build-tools | sort -V | tail -1)/apksigner \
             sign \
             --ks $RUNNER_TEMP/keystore.jks \
@@ -75,13 +71,13 @@ jobs:
 
           echo "SIGNED_APK=$SIGNED_APK" >> $GITHUB_ENV
 
-      # ── 8. Verify signature ────────────────────────────────────────────────
+      # ── 8. Verify signature ────────────────────────────────────────────────────────────────────
       - name: Verify APK signature
         run: |
           $ANDROID_HOME/build-tools/$(ls $ANDROID_HOME/build-tools | sort -V | tail -1)/apksigner \
             verify --verbose "${{ env.SIGNED_APK }}"
 
-      # ── 9. Upload APK artifact ────────────────────────────────────────────
+      # ── 9. Upload APK artifact ──────────────────────────────────────────────────────────────────
       - name: Upload signed APK
         uses: actions/upload-artifact@v4
         with:
@@ -89,7 +85,7 @@ jobs:
           path: ${{ env.SIGNED_APK }}
           retention-days: 30
 
-      # ── 10. Clean up keystore ─────────────────────────────────────────────
+      # ── 10. Clean up keystore ─────────────────────────────────────────────────────────────────
       - name: Remove keystore
         if: always()
         run: rm -f $RUNNER_TEMP/keystore.jks

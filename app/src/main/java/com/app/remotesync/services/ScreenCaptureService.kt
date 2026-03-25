@@ -8,6 +8,7 @@ import android.content.Intent
 import android.hardware.display.DisplayManager
 import android.media.projection.MediaProjection
 import android.media.projection.MediaProjectionManager
+import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.app.remotesync.R
@@ -74,7 +75,12 @@ class ScreenCaptureService : Service() {
             android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION)
 
         val resultCode = intent?.getIntExtra(EXTRA_RESULT_CODE, -1) ?: -1
-        val projectionData = intent?.getParcelableExtra<Intent>(EXTRA_PROJECTION_DATA)
+        val projectionData: Intent? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent?.getParcelableExtra(EXTRA_PROJECTION_DATA, Intent::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent?.getParcelableExtra(EXTRA_PROJECTION_DATA)
+        }
 
         if (resultCode == android.app.Activity.RESULT_OK && projectionData != null) {
             val mpManager = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
@@ -109,9 +115,9 @@ class ScreenCaptureService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
-    // ─────────────────────────────────────────────────────────────────────────
+    // ───────────────────────────────────────────────────────────────────────────
     // Rotation handling
-    // ─────────────────────────────────────────────────────────────────────────
+    // ───────────────────────────────────────────────────────────────────────────
 
     private fun registerDisplayListener() {
         val dm = getSystemService(DISPLAY_SERVICE) as DisplayManager
@@ -135,9 +141,9 @@ class ScreenCaptureService : Service() {
         displayListener = null
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
+    // ───────────────────────────────────────────────────────────────────────────
     // Notification channel
-    // ─────────────────────────────────────────────────────────────────────────
+    // ───────────────────────────────────────────────────────────────────────────
 
     private fun createNotificationChannel() {
         val channel = NotificationChannel(

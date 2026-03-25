@@ -10,17 +10,18 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import org.webrtc.EglBase
 import org.webrtc.ScreenCapturerAndroid
 import org.webrtc.SurfaceTextureHelper
-import org.webrtc.VideoCapturer
 import org.webrtc.VideoSource
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Wraps [ScreenCapturerAndroid] and manages the SurfaceTextureHelper lifecycle.
  *
  * On rotation, [onScreenRotated] must be called so the capturer adjusts its
- * output resolution accordingly — otherwise the stream remains letterboxed.
+ * output resolution accordingly.
  */
+@Singleton
 class ScreenCaptureVideoSource @Inject constructor(
     @ApplicationContext private val context: Context,
     private val eglBase: EglBase
@@ -29,12 +30,6 @@ class ScreenCaptureVideoSource @Inject constructor(
     private var capturer: ScreenCapturerAndroid? = null
     private var surfaceHelper: SurfaceTextureHelper? = null
 
-    /**
-     * Initializes the capturer against the given [videoSource] and starts capturing.
-     *
-     * @param mediaProjectionPermissionData The Intent data from [MediaProjectionManager.createScreenCaptureIntent()].
-     * @param videoSource The WebRTC [VideoSource] to feed frames into.
-     */
     fun initialize(
         mediaProjectionPermissionData: Intent,
         videoSource: VideoSource
@@ -60,13 +55,9 @@ class ScreenCaptureVideoSource @Inject constructor(
         }
     }
 
-    /**
-     * Called when the device screen rotates.
-     * Updates capture resolution so the stream matches the new orientation.
-     */
     fun onScreenRotated() {
         val (width, height, fps) = currentDisplayMetrics()
-        Timber.i("ScreenCaptureVideoSource: rotation detected → ${width}x${height}")
+        Timber.i("ScreenCaptureVideoSource: rotation detected \u2192 ${width}x${height}")
         capturer?.changeCaptureFormat(width, height, fps)
     }
 
